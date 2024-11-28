@@ -1,33 +1,45 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-import {Header} from "./components/Header";
-import {Email} from "./components/Email"
+import { useEffect, useState } from "react";
+import { Header } from "./components/Header";
+import { Email } from "./components/Email";
 import { useDispatch } from "react-redux";
 import { addUser } from "./redux/userSlice";
-import './App.css'
+import Modal from "./components/Modal";
+import "./App.css";
 
 function App() {
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users/1")
-    .then((response) => response.json())
-    .then((data)=>dispatch(addUser(data)))
-    .catch((error)=> console.log(error))
-  }, [])
+      .then((response) => response.json())
+      .then((data) => dispatch(addUser(data)))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className="App">
-    <Header/>
-    <Email/>
-     
+      <Header />
+      <Email />
+      <button onClick={() => setIsModalOpen(true)} className="open-button">
+        Abrir Modal
+      </button>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Título del Modal"
+      >
+        <p>
+          Este es el contenido del modal. Puedes poner cualquier contenido aquí.
+        </p>
+      </Modal>
     </div>
-  )
+  );
 }
 
-export default App
-
+export default App;
 
 /*  USER EXAMPLE FROM FETCH
 {

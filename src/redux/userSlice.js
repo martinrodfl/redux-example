@@ -2,28 +2,31 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { // se pasa como parametro en createSlice
-    name: "",
-    username: "",
-    email:"",
+const initialState = {
+  // se pasa como parametro en createSlice
+  name: "",
+  username: "",
+  email: "",
 };
 
 /* Porcion del estado para usuaios -> crear users y modificar email */
 export const userSlice = createSlice({
-    name: "user",
-    initialState,
-    reducers:{
-        addUser: (state,action) => {
-            const {name, username, email } = action.payload;
-            state.name = name;
-            state.username = username;
-            state.email = email;
-        },
-        changeEmail: (state, action) => {
-            state.email = action.payload;
-        }
-    }
-})
+  name: "user",
+  initialState,
+  reducers: {
+    addUser: (state, action) => {
+      const { id, name, username, email } = action.payload;
+      state.id = id;
+      state.name = name;
+      state.username = username;
+      state.email = email;
+    },
 
-export const { addUser, changeEmail} = userSlice.actions;
+    changeEmail: (state, action) => {
+      state.email = action.payload;
+    },
+  },
+});
+
+export const { addUser, changeEmail } = userSlice.actions;
 export default userSlice.reducer;
