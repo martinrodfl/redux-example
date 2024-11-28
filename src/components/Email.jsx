@@ -17,8 +17,6 @@ export const Email = () => {
         placeholder="Email"
         onChange={handleChange}
       />
-      <br></br>
-      <input type="number" id="quantity" name="quantity" min="0" max="1000" />
     </>
   );
 };

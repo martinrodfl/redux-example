@@ -25,16 +25,23 @@ function App() {
       <button onClick={() => setIsModalOpen(true)} className="open-button">
         Abrir Modal
       </button>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Título del Modal"
-      >
-        <p>
-          Este es el contenido del modal. Puedes poner cualquier contenido aquí.
-        </p>
-      </Modal>
+      <div>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title="Probando estad"
+        >
+          <div>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="0"
+              max="1000"
+            />
+          </div>
+        </Modal>
+      </div>
     </div>
   );
 }
