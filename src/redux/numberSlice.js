@@ -13,12 +13,10 @@ export const numberSlice = createSlice({
   initialState,
   reducers: {
     addNumber: (state, action) => {
-      const { number } = action.payload;
-      state.value = number;
+      state.value = action.payload ?? 0; // Fallback a 0 si es undefined
     },
-
     changeNumber: (state, action) => {
-      state.value = action.payload;
+      state.value = Number(action.payload) || 0; // Fallback a 0 si es NaN
     },
   },
 });

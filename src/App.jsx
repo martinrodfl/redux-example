@@ -1,19 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Header } from "./components/Header";
-import { Email } from "./components/Email";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { addUser } from "./redux/userSlice";
-import { addNumber, changeNumber } from "./redux/numberSlice";
+import { changeNumber } from "./redux/numberSlice";
+import { changeEmail } from "./redux/userSlice";
 import Modal from "./components/Modal";
 import "./App.css";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const email = useSelector((state) => state.user.email);
   const dispatch = useDispatch();
 
+  const handleChange = (e) => {
+    dispatch(changeEmail(e.target.value));
+  };
+  const user = useSelector((state) => state.user);
   const number = useSelector((state) => state.number.value);
 
   useEffect(() => {
@@ -21,7 +25,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => dispatch(addUser(data)))
       .catch((error) => console.log(error));
-    dispatch(addNumber(0));
+    // dispatch(addNumber(0));
   }, []);
 
   const handleChangeNumber = (e) => {
@@ -30,20 +34,26 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Email />
-      <div>
-        Ingresar numero
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="0"
-          max="1000"
-          step="1"
-          value={number}
-          onChange={handleChangeNumber}
-        />
+      <h1>Redux Toolkit example</h1>
+      <div className="card">
+        <div className="card-data">
+          <p>Name: {user.name}</p>
+          <p>Email: {user.email}</p>
+          <p>Userame: {user.username}</p>
+          <div className="div-input">
+            <p>Numero preferido</p>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="0"
+              max="1000"
+              step="1"
+              value={number}
+              onChange={handleChangeNumber}
+            />
+          </div>
+        </div>
       </div>
       <button onClick={() => setIsModalOpen(true)} className="open-button">
         Abrir Modal
@@ -55,7 +65,7 @@ function App() {
           title="Probando estado"
         >
           <div>
-            Ingresar numero
+            Ingresar numero en modal:
             <input
               type="number"
               id="quantity"
@@ -65,6 +75,14 @@ function App() {
               step="1"
               value={number}
               onChange={handleChangeNumber}
+            />
+            <br />
+            Cambiar email:
+            <input
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={handleChange}
             />
           </div>
         </Modal>
